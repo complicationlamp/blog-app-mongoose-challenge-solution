@@ -9,9 +9,11 @@ const mongoose = require('mongoose');
 // this module
 const expect = chai.expect;
 
-const {Posts} = require('../models');
+const {BlogPost} = require('../models');
 const {app, runServer, closeServer} = require('../server');
 const {TEST_DATABASE_URL} = require('../config');
+
+const should = chai.should();
 
 chai.use(chaiHttp);
 
@@ -29,6 +31,8 @@ function tearDownDb() {
       .catch(err => reject(err));
   });
 }
+
+
 
 function seedPostsData() {
   console.info('seeding Posts data');
@@ -48,7 +52,7 @@ function seedPostsData() {
   //   seedData.push(generatePostData());
   // }
   // // this will return a promise
-  return Posts.insertMany(seedData);
+  return BlogPost.insertMany(seedData);
 }
 
 // // used to generate data to put in db
@@ -140,7 +144,7 @@ describe('blogposts API resource', function() {
           expect(res).to.have.status(200);
           // otherwise our db seeding didn't work
           expect(res.body).to.have.lengthOf.at.least(1);
-          return Post.count();
+          return BlogPost.count();
         })
         .then(function(count) {
           expect(res.body).to.have.lengthOf(count);
@@ -155,25 +159,26 @@ describe('blogposts API resource', function() {
       return chai.request(app)
         .get('/posts')
         .then(function(res) {
-          expect(res).to.have.status(200);
-          expect(res).to.be.json;
-          expect(res.body.posts).to.be.a('array');
-          expect(res.body.posts).to.have.lengthOf.at.least(1);
+          res.should.have.status(200);
+          res.should.be.json;
+          // console.log(res.body);
+          res.body.should.be.a('array');
+          res.body.should.have.lengthOf.at.least(1);
 
-          res.body.forEach(function(post) {
+          res.body.forEach(function (post) {
             expect(post).to.be.a('object');
             expect(post).to.include.keys(
               'id', 'title', 'content', 'author');
           });
           resPost = res.body[0];
-          return post.findById(resPost.id);
+          return BlogPost.findById(resPost.id);
         })
         .then(function(post) {
 
           // expect(resPost.id).to.equal(post.id);
           expect(resPost.title).to.equal(post.title);
           expect(resPost.content).to.equal(post.content);
-          expect(resPost.author).to.equal(post.author)
+          expect(resPost.author).to.equal(post.authorName)
         });
     });
   });
@@ -212,9 +217,9 @@ describe('blogposts API resource', function() {
           expect(res.body.content).to.equal(newPost.content);
           expect(res.body.author).to.equal(
             `${newPost.author.firstName} ${newPost.author.lastName}`);
-          return post.findById(res.body.id);
+          return BlogPost.findById(res.body.id);
         })
-        .then(function(post) {
+        .then(function (post) {
           expect(post.title).to.equal(newPost.title);
           expect(post.content).to.equal(newPost.content);
           expect(post.author.firstName).to.equal(newPost.author.firstName);
@@ -240,7 +245,7 @@ describe('blogposts API resource', function() {
         }
       };
 
-      return Post
+      return BlogPost
         .findOne()
         .then(function(post) {
           updateData.id = post.id;
@@ -253,8 +258,8 @@ describe('blogposts API resource', function() {
         })
         .then(function(res) {
           expect(res).to.have.status(204);
-          
-          return Post.findById(updateData.id);
+
+          return BlogPost.findById(updateData.id);
         })
         .then(function(post) {
           expect(post.title).to.equal(updateData.title);
@@ -275,7 +280,7 @@ describe('blogposts API resource', function() {
 
       let post;
 
-      return Post
+      return BlogPost
         .findOne()
         .then(function(_post) {
           post = _post;
@@ -283,7 +288,7 @@ describe('blogposts API resource', function() {
         })
         .then(function(res) {
           expect(res).to.have.status(204);
-          return Post.findById(post.id);
+          return BlogPost.findById(post.id);
         })
         .then(function(_post) {
           expect(_post).to.be.null;
