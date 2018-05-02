@@ -1,3 +1,4 @@
+stark-crag-58255
 language: node_js
 node_js: node
 services:
@@ -6,6 +7,6 @@ deploy:
   provider: heroku
   api_key:
     secure: nI2gvrs7B0kYs9FbfYm9vXWvzzPmhi1LNqXMHLAFbjhaCNHIJnVXEwapb23TviKOzF9FEx8JJF7i5QiXQec7PoHMLMXy9vLn3miQ+x+8Lgj6VQom2mS0fXRCaQr40s3LtH6WjW4Lqkn5TANk6yyy/n8BiYEoyErIAG7RollzuR9vukwJ2+e9329kQQpGJ9FJsLk/UQ+HEVd+2JY1Y3Uwj+a9VgNnVeedM+VriPkGAfFDfCV7SVCov5hfEFxLLGLsPFNbTutT1RKnkCVIXj5XCLa7Dl+wKpSqFUtMEMm6i5hS3at8BaijpXGBRA6/PJTLjEgnMN+MqwAil7KUvQIKemhwlkFqR56kK20Qt5aDeehK9SF33gldDJ7ivNXzXv6+aJM2hFZ/2V8HDCEeHZpepSjTJRrpTK3h4X11uB+wP27CqogXtz7C7s0uALT6En8gFNq82+CtuCwfV/7weieSB3asGil5ntR1gokOL/FtwS5DWyXybh2F6TKPstRZOFMHKumEHuyyjMLConD6gUl/skX/zf9U7nhRoMICyeWHJrY/NR2v8yvG8BBR0IqMM9XjVjRJ8eMO+qLVZdRxX/dnNZtwjr5zLNEoHYkEbAkvdMk3pY6jjbS0tZvL2rwRLQddbZ4pSCshPPcOiORXG40GRz1pa/xsqPd2XAgVNf/Tiqc=
-  app: stark-crag-58255
+  app: blog-app-mongoose-challenge-solution
   on:
     repo: complicationlamp/blog-app-mongoose-challenge-solution
